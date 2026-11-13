@@ -1,5 +1,5 @@
-import { directMention } from "@slack/bolt";
-import nyanco from "./utils/nyanco";
+import { respond } from "../bot";
+import { nyanco } from "../utils/nyanco";
 
 // Description:
 //   だらずさんは JSON のお掃除がだいすきです
@@ -7,16 +7,7 @@ import nyanco from "./utils/nyanco";
 // Synopsis:
 //   json <jsonstring> - あなたの JSON をぷりちーにするにゃん
 
-export default [
-  directMention(),
-  /json +(.*)/i,
-  ({ context, say }: any) => {
-    try {
-      const json = JSON.parse(context.matches[1]);
-      const res = JSON.stringify(json, null, 2);
-      return say([`${nyanco()} っ`, "```", res, "```"].join("\n"));
-    } catch (e) {
-      console.error(e);
-    }
-  },
-];
+export default respond(/json +(.*)/i, ({ matches, say }) => {
+  const json = JSON.parse(matches[1]!);
+  return say([`${nyanco()} っ`, "```", JSON.stringify(json, null, 2), "```"].join("\n"));
+});

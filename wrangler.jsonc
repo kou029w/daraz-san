@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "daraz-san",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "observability": { "enabled": true },
+  "vars": {
+    "NASA_API_KEY": "Q8mtkFkP4Zru4mlDd812iw2vcQwx5B0qIsUKsxit"
+  }
+  // シークレット: wrangler secret put SLACK_BOT_TOKEN / SLACK_SIGNING_SECRET
+}

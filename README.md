@@ -1,20 +1,31 @@
 # だらずさん ⚡
 
-[Bolt](https://github.com/slackapi/bolt-js) で作られた [だらずさん](https://github.com/daraz-tek/daraz-bot)
+[Cloudflare Workers](https://workers.cloudflare.com/) で動く Slack ボット [だらずさん](https://github.com/daraz-tek/daraz-bot)
+
+Workers Free プランの範囲で動きます。
 
 1. デプロイ
 2. Slack アプリの作成
-3. 環境変数の設定
+3. シークレットの設定
 
 ## デプロイ
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fkou029w%2Fdaraz-san)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/kou029w/daraz-san)
+
+または手元から:
+
+```sh
+bun install
+bun run deploy
+```
+
+デプロイ先は `https://daraz-san.{アカウントのサブドメイン}.workers.dev` になります。
 
 ## Slack アプリの作成
 
 [Slack Applications](https://api.slack.com/apps) → Create New App → From an app manifest
 
-下記の Manifest の `{Vercelのプロジェクト名}` の部分を変更してコピペして、Slack アプリを作成します。
+下記の Manifest の `{Workers の URL}` の部分を変更してコピペして、Slack アプリを作成します。
 
 ```yaml
 display_information:
@@ -29,16 +40,41 @@ oauth_config:
       - chat:write
 settings:
   event_subscriptions:
-    request_url: https://{Vercelのプロジェクト名}.vercel.app/api/slack/events
+    request_url: https://{Workers の URL}/slack/events
     bot_events:
       - message.channels
 ```
 
-## 環境変数の設定
+## シークレットの設定
 
-[Vercel Dashboard](https://vercel.com/dashboard) → 対象のプロジェクト → Settings → Environment Variables
+```sh
+bunx wrangler secret put SLACK_BOT_TOKEN
+bunx wrangler secret put SLACK_SIGNING_SECRET
+```
 
-- `SLACK_BOT_TOKEN` ... [Slack Applications](https://api.slack.com/apps) → だらずさん → Permissions ページにある `xoxb-` から始まるボットトークン
+- `SLACK_BOT_TOKEN` ... [Slack Applications](https://api.slack.com/apps) → だらずさん → OAuth & Permissions ページにある `xoxb-` から始まるボットトークン
 - `SLACK_SIGNING_SECRET` ... [Slack Applications](https://api.slack.com/apps) → だらずさん → Basic Information ページにある Signing Secret
 
-これらの環境変数を設定後、再びデプロイして反映します。
+Cloudflare Dashboard → Workers & Pages → daraz-san → Settings → Variables and Secrets からも設定できます。
+
+## 開発
+
+```sh
+bun install
+cp .dev.vars.example .dev.vars # 値を書き換える
+bun run dev       # ローカル実行
+bun test          # テスト
+bun run typecheck # 型チェック
+```
+
+スクリプトは `src/scripts/` に置き、`src/scripts/index.ts` に登録します。
+
+```ts
+import { hear, respond } from "../bot";
+
+// メッセージに反応する
+export default hear(/にゃーん/, ({ say }) => say("にゃーん"));
+
+// ボットへのメンションで始まるメッセージにだけ反応する
+export default respond(/echo (.*)/, ({ matches, say }) => say(matches[1]!));
+```

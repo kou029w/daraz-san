@@ -1,6 +1,6 @@
 {
   "name": "daraz-san",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Daraz-san ⚡",
   "author": "Kohei Watanabe <kou029w@gmail.com>",
   "contributors": [
@@ -10,25 +10,20 @@
   ],
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
-    "build": "echo no front-end build specified",
-    "vercel-build": "tsup src --clean"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "bun test",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "tldts": "^7.5.1"
   },
   "devDependencies": {
-    "@slack/bolt": "^3.11.0",
-    "@types/kuromoji": "^0.1.1",
-    "@types/tldjs": "^2.3.1",
-    "cross-fetch": "^3.1.5",
-    "date-fns": "^2.28.0",
-    "date-fns-tz": "^1.3.3",
-    "get-video-id": "^3.5.3",
-    "glob": "^8.0.1",
-    "kuromoji": "^0.1.2",
-    "tldjs": "^2.3.1",
-    "tsup": "^5.12.6"
-  },
-  "engines": {
-    "node": ">=14.19.0"
-  },
-  "packageManager": "yarn@1.22.18"
+    "@cloudflare/workers-types": "^5.20261113.1",
+    "@types/bun": "^1.4.4",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.161.0"
+  }
 }

@@ -1,5 +1,5 @@
-import { directMention } from "@slack/bolt";
-import random from "./utils/random";
+import { respond } from "../bot";
+import { random } from "../utils/random";
 
 // Description:
 //   だらずさんはランダムにどれか選べます
@@ -10,14 +10,10 @@ import random from "./utils/random";
 //   えらべ <word1> <word2> ... <wordN> - どれか選ぶにゃん、 word の区切りは空白あるいはカンマにゃん。
 //   選べ <word1> <word2> ... <wordN> - どれか選ぶにゃん、 word の区切りは空白あるいはカンマにゃん。
 
-export default [
-  directMention(),
-  /(choice|random|えらべ|選べ) +(.*)/,
-  ({ context, say }: any) => {
-    const words = [
-      ...context.matches[2].split(/(?:,|\s)+/),
-      "人に決められるだけの人生でいいのか？自分で決めようず",
-    ];
-    return say(`:nya-n: < ${random(words)}`);
-  },
-];
+export default respond(/(choice|random|えらべ|選べ) +(.*)/, ({ matches, say }) => {
+  const words = [
+    ...matches[2]!.split(/(?:,|\s)+/),
+    "人に決められるだけの人生でいいのか？自分で決めようず",
+  ];
+  return say(`:nya-n: < ${random(words)}`);
+});

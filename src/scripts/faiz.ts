@@ -1,5 +1,7 @@
-export default (app: any) => {
-  app.message(/555/, ({ say }: any) =>
+import { hear } from "../bot";
+
+export default [
+  hear(/555/, ({ say }) =>
     say(
       [
         "Standing by... > :nya-n:",
@@ -7,10 +9,10 @@ export default (app: any) => {
         "Complete > :nya-n:",
         "変身！ > :nya-n:",
         ":555: ﾉｼ",
-      ].join("\n")
-    )
-  );
-  app.message(/551/, ({ say }: any) =>
+      ].join("\n"),
+    ),
+  ),
+  hear(/551/, ({ say }) =>
     say(
       [
         "551の豚まんがあるときー？ > :nya-n:",
@@ -29,7 +31,7 @@ export default (app: any) => {
         "　く､･〟 (∩￣]",
         "￣￣￣￣￣￣￣￣",
         "```",
-      ].join("\n")
-    )
-  );
-};
+      ].join("\n"),
+    ),
+  ),
+];

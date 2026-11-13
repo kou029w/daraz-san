@@ -1,5 +1,6 @@
-import random from "./utils/random";
-import nyanco from "./utils/nyanco";
+import { hear } from "../bot";
+import { nyanco } from "../utils/nyanco";
+import { random } from "../utils/random";
 
 const yakitoris = [
   "―ﾛ＠ﾛ＠ﾛ- ﾔｷﾄﾘ",
@@ -13,8 +14,7 @@ const yakitoris = [
   "―>ﾟ)))彡- 魚丸焼き",
 ];
 
-export default [
+export default hear(
   /焼鳥|焼き鳥|やきとり|ヤキトリ|串|プロキシ|プロクシ|proxy|Proxy|PROXY|ピロシキ/,
-  ({ say }: any) =>
-    say(`串焼きでも食べるにゃん < ${nyanco()}っ${random(yakitoris)}`),
-];
+  ({ say }) => say(`串焼きでも食べるにゃん < ${nyanco()}っ${random(yakitoris)}`),
+);

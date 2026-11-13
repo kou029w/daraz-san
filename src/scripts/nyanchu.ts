@@ -1,10 +1,6 @@
-import { directMention } from "@slack/bolt";
+import { respond } from "../bot";
 
-export default [
-  directMention(),
-  /(ニャンちゅう) +(.*)/,
-  ({ context, say }: any) => {
-    const oon = context.matches[2].split("").map((c: any) => `${c}゛`);
-    return say(`お゛ぉ゛ん！${oon.join("")}た゛に゛ゃあ゛ん！ > :nyanchu:`);
-  },
-];
+export default respond(/(ニャンちゅう) +(.*)/, ({ matches, say }) => {
+  const oon = [...matches[2]!].map((c) => `${c}゛`).join("");
+  return say(`お゛ぉ゛ん！${oon}た゛に゛ゃあ゛ん！ > :nyanchu:`);
+});
