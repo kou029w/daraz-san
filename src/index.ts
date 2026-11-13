@@ -1,6 +1,6 @@
 import { dispatch, type Message } from "./bot";
 import type { Env } from "./env";
-import listeners from "./scripts";
+import listeners from "./scripts.gen";
 import { postMessage, verifySlackRequest } from "./slack";
 
 interface MessageEvent extends Message {

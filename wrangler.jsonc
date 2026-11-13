@@ -3,6 +3,7 @@
   "name": "daraz-san",
   "main": "src/index.ts",
   "compatibility_date": "2026-11-01",
+  "build": { "command": "bun run gen", "watch_dir": "src/scripts" },
   "observability": { "enabled": true },
   "vars": {
     "NASA_API_KEY": "Q8mtkFkP4Zru4mlDd812iw2vcQwx5B0qIsUKsxit"

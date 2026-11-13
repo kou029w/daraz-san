@@ -67,7 +67,7 @@ bun test          # テスト
 bun run typecheck # 型チェック
 ```
 
-スクリプトは `src/scripts/` に置き、`src/scripts/index.ts` に登録します。
+スクリプトは `src/scripts/` に置くだけで読み込まれます (`tools/gen.ts` が `src/scripts.gen.ts` を生成します。`bun install`・`bun run dev`・`bun run deploy` 時に自動実行)。
 
 ```ts
 import { hear, respond } from "../bot";

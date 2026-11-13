@@ -12,10 +12,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "gen": "bun tools/gen.ts",
+    "postinstall": "bun run gen",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "test": "bun test",
-    "typecheck": "tsc"
+    "test": "bun run gen && bun test",
+    "typecheck": "bun run gen && tsc"
   },
   "dependencies": {
     "tldts": "^7.5.1"

@@ -11,5 +11,5 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run typecheck
-      - run: bun test
+      - run: bun run test
       - run: bunx wrangler deploy --dry-run
